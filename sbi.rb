@@ -47,8 +47,7 @@ class SBINetBank
   end
 
   def logout
+    @client.get(@url + '/i010001CT')
   end
-
-
 
 end
