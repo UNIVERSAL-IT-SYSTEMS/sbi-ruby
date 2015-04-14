@@ -6,11 +6,12 @@ class HTTPClient
   def initialize opt = nil
     @cookies = {}
     @timeout = 60
+    @insecure = nil
     if opt && opt[:agent_name]
       @agent_name = opt[:agent_name]
     end
   end
-  attr_accessor :timeout, :cookies
+  attr_accessor :timeout, :cookies, :insecure
 
   def formencode data
     return data.map{|k,v| k+'='+URI.encode(v.to_s)}.join('&')
@@ -28,7 +29,7 @@ class HTTPClient
     http.read_timeout = @timeout
     if uri.scheme == 'https'
       http.use_ssl = true
-      #http.verify_mode = OpenSSL::SSL::VERIFY_NONE # if @insecure
+      http.verify_mode = OpenSSL::SSL::VERIFY_NONE if @insecure
     end
     return http,headers
   end
