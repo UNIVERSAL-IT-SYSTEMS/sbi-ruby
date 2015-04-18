@@ -19,7 +19,6 @@ begin
   banking.recent.each do |row|
     p row
   end
-
 ensure
   # logout
   banking.logout
